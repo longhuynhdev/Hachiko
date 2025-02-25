@@ -1,0 +1,53 @@
+@startuml
+left to right direction
+package "Hachiko Ecommerce"{
+    package "Admin Use Cases" {
+        ' Admin Use Cases
+        (Manage Product Category) as AUC1
+        (Manage Product) as AUC2
+        (Manage Order) as AUC3
+        (View Customer List) as AUC4
+        (View Sales Statistics) as AUC5
+        (Manage User Accounts) as AUC6
+    }
+    package "User Use Cases" {
+        ' User Use Cases
+        (Register) as UC1
+        (Browse and Search Product) as UC2
+        (Buy Product) as UC3
+        (Return Product) as UC4
+        (Product Payment) as UC5
+        (Edit User Profile) as UC6
+        (View Shopping History) as UC7
+        (View Product Details) as UC8
+        (Track Order Status) as UC9
+        (Leave Product Reviews) as UC10
+    }
+
+}
+actor :Unregistered User: as User1
+actor :Registered User: as User2
+actor Admin
+' Admin connections
+Admin --> AUC1
+Admin --> AUC2
+Admin --> AUC3
+Admin --> AUC4
+Admin --> AUC5
+Admin --> AUC6
+Admin --> AUC7
+' Unregistered User connections
+User1 --> UC1
+User1 --> UC2
+User1 --> UC8
+' Registered User connections
+User2 --> UC3
+User2 --> UC4
+User2 --> UC5
+User2 --> UC6
+User2 --> UC7
+User2 --> UC9
+User2 --> UC10
+' Inheritance
+User1 <|-- User2
+@enduml
