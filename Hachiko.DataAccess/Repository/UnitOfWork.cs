@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Hachiko.DataAccess.Repository.IRepository;
+﻿using Hachiko.DataAccess.Repository.IRepository;
 using Hachiko.DataAcess.Data;
 
 namespace Hachiko.DataAccess.Repository

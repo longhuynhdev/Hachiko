@@ -1,0 +1,84 @@
+@model List<Product>
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">List Product</h2>
+
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        @*Thêm Buttion Create New Product*@
+        <div class="row pb-3">
+            <div class="col-6">
+
+            </div>
+            <div class="col-6 text-end">
+                <a asp-controller="Product" asp-action="UpdateAndInsert" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Create New Product
+                </a>
+            </div>
+        </div>
+
+
+        @*references bootstrap: https://getbootstrap.com/docs/4.1/content/tables/*@
+        <table id="tblData" class="table table-bordered table-striped table-hover" style="width: 100%">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>ISBN</th>
+                <th>Price</th>
+                <th>Author</th>
+                <th>Category</th>
+                <th>
+
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Title
+                    </td>
+                    <td>
+                        @item.ISBN
+                    </td>
+                    <td>
+                        @item.ListPrice
+                    </td>
+                    <td>
+                        @item.Author
+                    </td>
+                    <td>
+                        @item.Category.Name
+
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Product" asp-action="UpdateAndInsert" asp-route-id="@item.Id"
+                               class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                            <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id"
+                               class="btn btn-danger mx-2">
+                                <i class="bi bi-x-square"> </i> Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="container">
+
+
+</div>

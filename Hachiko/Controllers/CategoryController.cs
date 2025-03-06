@@ -3,9 +3,8 @@ using Hachiko.DataAcess.Data;
 using Hachiko.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Hachiko.Areas.Admin.Controllers
+namespace Hachiko.Controllers
 {
-    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -28,7 +27,7 @@ namespace Hachiko.Areas.Admin.Controllers
 
         [HttpPost]
         public IActionResult Create(Category obj)
-        {   //check Model Sate
+        {   //check Model State
             /*
             if (obj.Name.ToLower() == obj.DisplayOrder.ToString())
             {
