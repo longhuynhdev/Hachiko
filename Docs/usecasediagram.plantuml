@@ -35,7 +35,6 @@ Admin --> AUC3
 Admin --> AUC4
 Admin --> AUC5
 Admin --> AUC6
-Admin --> AUC7
 ' Unregistered User connections
 User1 --> UC1
 User1 --> UC2

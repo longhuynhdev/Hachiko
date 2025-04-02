@@ -15,13 +15,12 @@ namespace Hachiko.Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Tên không được bỏ trống")]
-        public string Title { get; set; }
-        public string? Description { get; set; }
-        //[Required]
-        public string ISBN { get; set; }
         [Required]
-        public string Author { get; set; }
+        public string Title { get; set; } = String.Empty;
+        public string? Description { get; set; }
+        public string ISBN { get; set; } = String.Empty;
+        [Required]
+        public string Author { get; set; } = String.Empty;
         [Required]
         [Display(Name ="List Price")]
         [Range(0,int.MaxValue)]
@@ -43,8 +42,8 @@ namespace Hachiko.Models
         //Reference key
         [ForeignKey("CategoryId")]
         [ValidateNever]
-        public Category Category { get; set; }
+        public Category? Category { get; set; } 
         [ValidateNever]
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; } 
     }
 }

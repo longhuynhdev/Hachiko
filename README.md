@@ -2,7 +2,7 @@
 
 
 ## Use-case diagram
-![Use-case-diagram](./Resources/usecasediagram.png)
+![Use-case-diagram](./Docs/usecasediagram.png)
 
 ## Project Setup Guide
 
