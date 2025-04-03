@@ -10,10 +10,10 @@ namespace Hachiko.Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Tên không được bỏ trống")]
+        [Required]
         [DisplayName("Category Name")]
         [StringLength(100)]
-        public string Name { get; set; }
+        public string Name { get; set; } = String.Empty;
 
         public string? Description { get; set; }
 

@@ -42,7 +42,7 @@ namespace Hachiko.DataAcess.Data
                     Price2 = 85,
                     Price3 = 80,
                     CategoryId = 1,
-                    ImageUrl =""
+                    ImageUrl ="/images/products/fortune of time.jpg"
                 },
                 new Product
                 {
@@ -56,7 +56,7 @@ namespace Hachiko.DataAcess.Data
                     Price2 = 25,
                     Price3 = 20,
                     CategoryId = 1,
-                    ImageUrl = ""
+                    ImageUrl = "/images/products/dark skies.jpg"
                 },
                 new Product
                 {
@@ -70,7 +70,7 @@ namespace Hachiko.DataAcess.Data
                     Price2 = 40,
                     Price3 = 35,
                     CategoryId = 2,
-                    ImageUrl = ""
+                    ImageUrl = "/images/products/vanish in the sunset.jpg"
                 },
                 new Product
                 {
@@ -84,7 +84,7 @@ namespace Hachiko.DataAcess.Data
                     Price2 = 60,
                     Price3 = 55,
                     CategoryId = 3,
-                    ImageUrl = ""
+                    ImageUrl = "/images/products/cotton candy.jpg"
                 },
                 new Product
                 {
@@ -98,7 +98,7 @@ namespace Hachiko.DataAcess.Data
                     Price2 = 25,
                     Price3 = 20,
                     CategoryId = 2,
-                    ImageUrl = ""
+                    ImageUrl = "/images/products/rock in the ocean.jpg"
                 },
                 new Product
                 {
@@ -112,7 +112,7 @@ namespace Hachiko.DataAcess.Data
                     Price2 = 22,
                     Price3 = 20,
                     CategoryId = 2,
-                    ImageUrl = ""
+                    ImageUrl = "/images/products/leaves and wonders.jpg"
                 }
                 );
         }

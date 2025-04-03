@@ -3,9 +3,8 @@ using Hachiko.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace Hachiko.Areas.Customer.Controllers
+namespace Hachiko.Controllers
 {
-    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

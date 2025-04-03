@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Hachiko.DataAccess/Hachiko.DataAccess.csproj" />
+  <Project Path="Hachiko.Models/Hachiko.Models.csproj" />
+  <Project Path="Hachiko.Utility/Hachiko.Utility.csproj" />
+  <Project Path="Hachiko/Hachiko.csproj" />
+</Solution>

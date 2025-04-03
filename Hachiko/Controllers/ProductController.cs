@@ -1,14 +1,11 @@
-﻿using Hachiko.DataAccess.Repository;
-using Hachiko.DataAccess.Repository.IRepository;
+﻿using Hachiko.DataAccess.Repository.IRepository;
 using Hachiko.Models;
 using Hachiko.Models.ViewModels;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Hachiko.Areas.Admin.Controllers
+namespace Hachiko.Controllers
 {
-    [Area("Admin")]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -25,7 +22,7 @@ namespace Hachiko.Areas.Admin.Controllers
             var productList = _unitOfWork.Product.GetAll(includeProperties:"Category").ToList();
             
              
-            return View("Index",productList);
+            return View("Index1",productList);
         }
 
         public IActionResult UpdateAndInsert(int? id)

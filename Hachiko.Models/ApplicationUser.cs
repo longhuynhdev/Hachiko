@@ -11,7 +11,7 @@ namespace Hachiko.Models
     public class ApplicationUser : IdentityUser
     {
         [Required]
-        public string Name { get; set; }
+        public string Name { get; set; } = String.Empty;
         public string? StreetAddress { get; set; }
         public string? City { get; set; }
         public string? State { get; set; }  
