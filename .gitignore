@@ -361,9 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/HachikoRazor
+
+# Custom
 .DS_Store
-.idea/.idea.EC-Project/.idea/.name
-.gitignore
-.idea/.idea.EC-Project/.idea/workspace.xml
-/Hachiko/appsettings.json
+.idea/
+CLAUDE.md
