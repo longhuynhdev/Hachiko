@@ -34,7 +34,7 @@ namespace Hachiko.Controllers
                 );
             //Pass CategoryList to View by ViewBag
             //ViewBag.CategoryList = CategoryList;
-            ProductVM productVM = new ProductVM()
+            ProductViewModel productVM = new ProductViewModel()
             {
                 Product = new Product(),
                 CategoryList = CategoryList
@@ -51,7 +51,7 @@ namespace Hachiko.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateAndInsert(ProductVM productVM, IFormFile? file)
+        public IActionResult UpdateAndInsert(ProductViewModel productVM, IFormFile? file)
         {  
 
             if (ModelState.IsValid)
