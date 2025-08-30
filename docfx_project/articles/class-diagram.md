@@ -1,3 +1,5 @@
+## Class Diagram
+```plantuml
 @startuml
 
 class Product {
@@ -25,3 +27,4 @@ class Category {
 Product <-- Category
 
 @enduml
+```

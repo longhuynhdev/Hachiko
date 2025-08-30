@@ -1,0 +1,10 @@
+- name: Getting Started
+  href: getting-started.md
+- name: Architecture
+  href: architecture.md
+- name: Use case diagram
+  href: use-case-diagram.md
+- name: Class diagram
+  href: class-diagram.md
+- name: Flowchart
+  href: flowchart.md

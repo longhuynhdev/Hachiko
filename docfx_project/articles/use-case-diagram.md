@@ -1,3 +1,6 @@
+## Use case diagram
+
+```plantuml
 @startuml
 left to right direction
 package "Hachiko Ecommerce"{
@@ -50,3 +53,4 @@ User2 --> UC10
 ' Inheritance
 User1 <|-- User2
 @enduml
+```
