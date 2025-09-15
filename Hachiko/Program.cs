@@ -60,4 +60,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+// Seed database with default roles and users
+await DbInitializer.InitializeAsync(app.Services);
+
 app.Run();
