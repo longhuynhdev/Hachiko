@@ -19,7 +19,7 @@ namespace Hachiko.Controllers
             var categoryList = _unitOfWork.Category.GetAll().ToList();
             return View("Index", categoryList);
         }
-
+        
         public IActionResult Create()
         {
             return View("Create", new Category());

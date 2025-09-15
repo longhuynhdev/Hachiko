@@ -1,9 +1,6 @@
 ﻿@*ref: https://learn.microsoft.com/en-us/aspnet/core/mvc/views/partial?view=aspnetcore-7.0*@
 @if (TempData["success"] != null)
 {
-     @*
-     <h2 style="color: red">@TempData["success"]</h2>
-     *@
     <script src="/lib//jquery/dist/jquery.min.js"> </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script type="text/javascript">
@@ -13,12 +10,8 @@
 
 @if (TempData["error"] != null)
 {
-    @*
-    <h2 style="color: red">@TempData["error"]</h2>
-    *@
     <script src="/lib//jquery/dist/jquery.min.js"> </script>
     <script scr="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
     <script type="text/javascript">
         toastr.success('@TempData["error"]', '', { positionClass: 'toast-bottom-right' });
     </script>

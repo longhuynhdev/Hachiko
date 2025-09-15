@@ -11,8 +11,6 @@
     @*Add toastr js lib for notifications*@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    @* Add tinymce js lib for text editor *@
-    <script src="https://cdn.tiny.cloud/1/y5veqttnh23ds01swn1d4grtue1b5t1712zp09rd89jnwx9j/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     @* Add dataTables js lib for table *@
     <script src="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"></script>
     @* Add sweetalert2 js lib *@
@@ -35,8 +33,6 @@
                             <a class="nav-link text-dark" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         
-                        
-
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
@@ -53,10 +49,6 @@
                                     <a class="nav-link text-dark" asp-controller="Product" asp-action="Index">Product</a>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
-                                @* <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li> *@
                             </ul>
                         </li>
 
@@ -71,7 +63,7 @@
 
 <div class="container">
     <main role="main" class="pb-3">
-        @*Sử dụng partial view cho mục đích thông báo cho user khi thành công / thất bại,... cho 1 action nào đó*@
+        @*  _Notification Partial View is here so that notifications can be used for all Views.*@
         <partial name="_Notification"/>
         @RenderBody()
     </main>

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hachiko.DataAcess.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         //Constructor
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
