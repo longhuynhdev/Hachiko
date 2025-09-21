@@ -12,25 +12,21 @@
         <form method="post">
             <input asp-for="Id" hidden />
             <div class="border p-3 mt-4">
-                @*<div asp-validation-summary="All" class="text-danger"></div>*@
+                
                 <div class="form-floating py-2 col-12">
-                    @*Replace by tag helper: asp-for*@
-                    @*<label class="p-0"> Category Name</label>*@
-                    <input asp-for="Name" class="form-control border-0 shadow" />
+                    <input asp-for="Name" class="form-control border-0 shadow"/>
                     <label asp-for="Name" class="ms-2"></label>
-                   
-                    @*check valid by using tag helper: asp-validation-for*@
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
+                
                 <div class="form-floating py-2 col-12">
-                    @*<label class="p-0"> Description </label>*@
-                    <input asp-for="Description" class="form-control border-0 shadow" />
+                    <input asp-for="Description" class="form-control border-0 shadow"/>
                     <label asp-for="Description" class="ms-2"></label>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
+                
                 <div class="form-floating py-2 col-12">
-                    @*<label class="p-0"> Display Order </label>*@
-                    <input asp-for="DisplayOrder" class="form-control border-0 shadow" />
+                    <input asp-for="DisplayOrder" class="form-control border-0 shadow"/>
                     <label asp-for="DisplayOrder" class="ms-2"></label>
                     <span asp-validation-for="DisplayOrder" class="text-danger"></span>
                 </div>
@@ -40,24 +36,14 @@
                         <button type="submit" class="btn btn-primary form-control">Edit</button>
                     </div>
                     <div class="col-6 col-md-3">
-                        @*tag helper: asp-controller, asp-action*@
                         <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary border form-control"> Back to List</a>
                     </div>
-
                 </div>
-
+                
             </div>
         </form>
     </div>
 </div>
-
-@* <div class="row">
-    <div class="col-3">
-        <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary"> Back</a>
-    </div>
-</div> *@
-
-
 
 @section Scripts {
     @{

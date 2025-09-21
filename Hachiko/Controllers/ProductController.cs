@@ -1,15 +1,17 @@
 ﻿using Hachiko.DataAccess.Repository.IRepository;
 using Hachiko.Models;
 using Hachiko.Models.ViewModels;
+using Hachiko.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Hachiko.Controllers
 {
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        //Inject IWebHostEnvironment using Dependency Injection
         private readonly IWebHostEnvironment _webHostEnvironment; //using to access wwwroot folder
         public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
@@ -19,32 +21,31 @@ namespace Hachiko.Controllers
 
         public IActionResult Index()
         {
-            var productList = _unitOfWork.Product.GetAll(includeProperties:"Category").ToList();
-            
-             
-            return View("Index1",productList);
+            var productList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+
+            return View("Index", productList);
         }
 
         public IActionResult UpdateAndInsert(int? id)
         {
-            //Get CategoryList
             IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.
                 GetAll().Select(
               u => new SelectListItem { Text = u.Name, Value = u.Id.ToString() }
                 );
-            //Pass CategoryList to View by ViewBag
-            //ViewBag.CategoryList = CategoryList;
+
             ProductViewModel productVM = new ProductViewModel()
             {
                 Product = new Product(),
                 CategoryList = CategoryList
             };
+            // Insert case
             if (id == null || id == 0)
             {
                 return View("UpdateAndInsert", productVM);
-            } else
+            }
+            else
             {
-                //Update 
+                //Update case
                 productVM.Product = _unitOfWork.Product.Get(u => u.Id == id);
                 return View("UpdateAndInsert", productVM);
             }
@@ -52,17 +53,17 @@ namespace Hachiko.Controllers
 
         [HttpPost]
         public IActionResult UpdateAndInsert(ProductViewModel productVM, IFormFile? file)
-        {  
+        {
 
             if (ModelState.IsValid)
             {
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
-                if(file != null)
+                if (file != null)
                 {
                     string productPath = Path.Combine(wwwRootPath + @"\images\product");
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
 
-                    if(String.IsNullOrEmpty(productVM.Product.ImageUrl) == false)
+                    if (String.IsNullOrEmpty(productVM.Product.ImageUrl) == false)
                     {
                         //Remove old image
                         var oldImagePath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
@@ -72,49 +73,47 @@ namespace Hachiko.Controllers
                         }
                     }
 
-                    using (var fileSteam = new FileStream(Path.Combine(productPath,fileName),FileMode.Create)) 
-                    { 
+                    using (var fileSteam = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    {
                         file.CopyTo(fileSteam);
                     }
 
                     productVM.Product.ImageUrl = @"\images\product\" + fileName;
                 }
 
-                if(productVM.Product.Id == 0)
+                if (productVM.Product.Id == 0)
                 {
-                    //add new Product by EF 
-                    //Insert
+                    //Insert case
                     _unitOfWork.Product.Add(productVM.Product);
-                } else
+                }
+                else
                 {
-                    //Update
+                    //Update case
                     _unitOfWork.Product.Update(productVM.Product);
                 }
 
                 _unitOfWork.Save();
 
-                //TempData to message to client
                 TempData["success"] = "Category created successfully";
 
                 return RedirectToAction("Index", "Product");
 
-            } else
+            }
+            else
             {
                 productVM.CategoryList = _unitOfWork.Category.
                GetAll().Select(
-             u => new SelectListItem { 
-                 Text = u.Name, 
-                 Value = u.Id.ToString() 
-                });
-                
+             u => new SelectListItem
+             {
+                 Text = u.Name,
+                 Value = u.Id.ToString()
+             });
+
                 return View(productVM);
             }
-
-           
-            /*Sau khi them Category chuyen huong den Action Index de xem thay doi*/
         }
 
-        
+
         public IActionResult Delete(int? id)
         {
             //Validation
@@ -136,7 +135,7 @@ namespace Hachiko.Controllers
 
         //POST
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int? id)
+        public IActionResult DeleteProduct(int? id)
         {
             //TODO: Handle delete image file
             Product? obj = _unitOfWork.Product.Get(u => u.Id == id);
@@ -171,8 +170,8 @@ namespace Hachiko.Controllers
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }
-            var oldImagePath = 
-                Path.Combine(_webHostEnvironment.WebRootPath, 
+            var oldImagePath =
+                Path.Combine(_webHostEnvironment.WebRootPath,
                 product.ImageUrl.TrimStart('\\'));
             if (System.IO.File.Exists(oldImagePath))
             {
@@ -181,7 +180,7 @@ namespace Hachiko.Controllers
             _unitOfWork.Product.Remove(product);
             _unitOfWork.Save();
 
-            return Json(new {success= true, message = "Delete Successful"});
+            return Json(new { success = true, message = "Delete Successful" });
         }
 
         #endregion

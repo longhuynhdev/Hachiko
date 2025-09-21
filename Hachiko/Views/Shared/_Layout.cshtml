@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,12 +8,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/Hachiko.styles.css" asp-append-version="true" />
     @*Add bootstrap icon*@
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
     @*Add toastr js lib for notifications*@
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    @* Add tinymce js lib for text editor *@
-    <script src="https://cdn.tiny.cloud/1/y5veqttnh23ds01swn1d4grtue1b5t1712zp09rd89jnwx9j/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     @* Add dataTables js lib for table *@
     <script src="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"></script>
     @* Add sweetalert2 js lib *@
@@ -20,69 +19,74 @@
 
 
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Hachiko</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="Customer" asp-controller="Home"
+                                asp-action="Index">Home</a>
                         </li>
-                        
-                        
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="Customer" asp-controller="Home"
+                                asp-action="Privacy">Privacy</a>
                         </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Content Management
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-item">
-                                    <a class="nav-link text-dark" asp-controller="Category" asp-action="Index">Category</a>
-                                </li>
-                                <li class="dropdown-item">
-                                    <a class="nav-link text-dark" asp-controller="Product" asp-action="Index">Product</a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                @* <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li> *@
-                            </ul>
-                        </li>
-
+                        @* Render Content Management Dropdown for Admin *@
+                        @if (User.IsInRole(SD.Role_Admin))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    Content Management
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-item">
+                                        <a class="nav-link text-dark" asp-controller="Category"
+                                            asp-action="Index">Category</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a class="nav-link text-dark" asp-controller="Product"
+                                           asp-action="Index">Product</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a class="nav-link text-dark" asp-controller="Company" asp-action="Index">Company</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
     </header>
- 
 
 
-<div class="container">
-    <main role="main" class="pb-3">
-        @*Sử dụng partial view cho mục đích thông báo cho user khi thành công / thất bại,... cho 1 action nào đó*@
-        <partial name="_Notification"/>
-        @RenderBody()
-    </main>
-</div>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @*  _Notification Partial View is here so that notifications can be used for all Views.*@
+            <partial name="_Notification" />
+            @RenderBody()
+        </main>
+    </div>
 
     <footer class="border-top footer bg-primary text-muted ">
         <div class="text-center">
-            &copy; 2023 - Hachiko <i class="bi bi-heart-fill"></i> EC232-03 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - Hachiko <i class="bi bi-heart-fill"></i> EC232-03 - <a asp-area="" asp-controller="Home"
+                asp-action="Privacy">Privacy</a>
         </div>
     </footer>
- 
+
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -91,4 +95,5 @@
     <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>
