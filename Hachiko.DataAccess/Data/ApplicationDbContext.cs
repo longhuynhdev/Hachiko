@@ -22,8 +22,18 @@ namespace Hachiko.DataAcess.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-
             base.OnModelCreating(modelBuilder);
+
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                var tableName = entityType.GetTableName();
+                if ( tableName.StartsWith("AspNet"))
+                {
+                    entityType.SetTableName(tableName.Substring(6));
+                }
+            }
+
+            
             modelBuilder.Entity<Category>().HasData(
                 new Category() {Id =1, Name = "Action", DisplayOrder = 1},
                 new Category() {Id = 2, Name = "SciFi", DisplayOrder = 2},
