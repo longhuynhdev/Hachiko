@@ -3,6 +3,7 @@ using Hachiko.DataAccess.Repository.IRepository;
 using Hachiko.DataAcess.Data;
 using Hachiko.Models;
 using Hachiko.Utility;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +46,20 @@ builder.Services.ConfigureApplicationCookie(options =>
 // Add Services
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+
+// Google Authentication
+builder.Services.AddAuthentication()
+    .AddGoogle(googleOptions =>
+    {
+
+        IConfigurationSection googleAuthNSection =
+            builder.Configuration.GetSection("Authentication:Google");
+
+        googleOptions.ClientId = googleAuthNSection["ClientId"];
+        googleOptions.ClientSecret = googleAuthNSection["ClientSecret"];
+
+        googleOptions.CallbackPath = "/signin-google";
+    });
 
 
 var app = builder.Build();
