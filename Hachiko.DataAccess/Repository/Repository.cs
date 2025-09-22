@@ -13,7 +13,6 @@ namespace Hachiko.DataAccess.Repository
         {
             _db = db;
             this.dbSet = _db.Set<T>();
-            //_db.Categories == dbSet
             _db.Products.Include(u => u.Category);
         }
 
@@ -21,7 +20,11 @@ namespace Hachiko.DataAccess.Repository
         public void Add(T entity)
         {
             dbSet.Add(entity);
-            //throw new NotImplementedException();
+        }
+
+        public void AddRange(IEnumerable<T> entities)
+        {
+            dbSet.AddRange(entities);
         }
 
         public T Get(System.Linq.Expressions.Expression<Func<T, bool>> filter, string? includeProperties = null)
@@ -39,7 +42,6 @@ namespace Hachiko.DataAccess.Repository
             return query.FirstOrDefault();
         }
 
-        //Category, CoverType
         public IEnumerable<T> GetAll(string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;

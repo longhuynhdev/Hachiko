@@ -13,7 +13,7 @@ namespace Hachiko.Utility
         Task IEmailSender.SendEmailAsync(string email, string subject, string htmlMessage)
         {
             string userName = "duahaudev@gmail.com";
-            string passWord = "scta neam pdqy prbk";
+            string passWord = "wmfl gsxo zaiu ronc";
 
             var client = new SmtpClient("smtp.gmail.com", 587)
             {

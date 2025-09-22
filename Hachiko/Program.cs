@@ -1,6 +1,7 @@
 using Hachiko.DataAccess.Repository;
 using Hachiko.DataAccess.Repository.IRepository;
 using Hachiko.DataAcess.Data;
+using Hachiko.Models;
 using Hachiko.Utility;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
@@ -12,14 +13,37 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+
 // Setup EF Core
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString, b => b.MigrationsAssembly("Hachiko")));
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+
+// Setup Identity
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = false;
+
+    // Configure lockout
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+})
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
-builder.Services.AddRazorPages();
-//Repository Pattern
+
+// Configure cookie settings
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Account/Login";
+    options.LogoutPath = "/Identity/Account/Logout";
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+});
+
+// Add Services
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
@@ -60,5 +84,8 @@ app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// Seed database with default roles and users
+await DbInitializer.InitializeAsync(app.Services);
 
 app.Run();

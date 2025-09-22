@@ -1,10 +1,13 @@
 ﻿using Hachiko.DataAccess.Repository.IRepository;
 using Hachiko.DataAcess.Data;
 using Hachiko.Models;
+using Hachiko.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hachiko.Controllers
 {
+    [Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -26,30 +29,19 @@ namespace Hachiko.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Category obj)
-        {   //check Model State
-            /*
-            if (obj.Name.ToLower() == obj.DisplayOrder.ToString())
-            {
-                ModelState.AddModelError("Name","Name và Order Number không được giống nhau");
-            }
-            */
-
+        public IActionResult Create(Category entity)
+        {   
             if (ModelState.IsValid)
             {
-                //add new Category by EF 
-                _unitOfWork.Category.Add(obj);
+                _unitOfWork.Category.Add(entity);
                 _unitOfWork.Save();
 
-                //TempData to message to client
                 TempData["success"] = "Category created successfully";
 
                 return RedirectToAction("Index", "Category");
 
             }
-
-            return View(obj);
-            /*Sau khi them Category chuyen huong den Action Index de xem thay doi*/
+            return View(entity);
         }
 
         public IActionResult Edit(int? id)
@@ -61,11 +53,6 @@ namespace Hachiko.Controllers
             }
 
             Category? category = _unitOfWork.Category.Get(u => u.Id == id);
-            /*
-            Category? category1 = _dbContext.Categories.FirstOrDefault(item => item.Id == id);
-            Category? category2 = _dbContext.Categories.Where(item => item.Id == id).FirstOrDefault();
-            */
-
 
             if (category == null)
             {
@@ -80,13 +67,11 @@ namespace Hachiko.Controllers
         {
             if (ModelState.IsValid)
             {
-                //eidt Category with EF 
                 _unitOfWork.Category.Update(obj);
                 _unitOfWork.Save();
 
                 TempData["success"] = "Category edited successfully";
 
-                /*Sau khi them Category chuyen huong den Action Index de xem thay doi*/
                 return RedirectToAction("Index", "Category");
             }
 
@@ -104,7 +89,6 @@ namespace Hachiko.Controllers
 
             Category? category = _unitOfWork.Category.Get(u => u.Id == id);
 
-
             if (category == null)
             {
                 return NotFound();
@@ -115,7 +99,7 @@ namespace Hachiko.Controllers
 
         //POST
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int? id)
+        public IActionResult DeleteCategory(int? id)
         {
 
             Category? obj = _unitOfWork.Category.Get(u => u.Id == id);
@@ -130,7 +114,6 @@ namespace Hachiko.Controllers
 
             TempData["success"] = "Category deleted successfully";
 
-            /*Sau khi them Category chuyen huong den Action Index de xem thay doi*/
             return RedirectToAction("Index", "Category");
 
         }
