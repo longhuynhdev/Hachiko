@@ -219,7 +219,7 @@ namespace Hachiko.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "Author", "CategoryId", "Description", "ISBN", "ImageUrl", "ListPrice", "Price1", "Price2", "Price3", "Title" },
+                columns: new[] { "Id", "Author", "CategoryId", "Description", "ISBN", "ImageUrl", "OriginalPrice", "Price", "Price2", "Price3", "Title" },
                 values: new object[,]
                 {
                     { 1, "Billy Spark", 1, "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ", "SWD9999001", "/images/products/fortune of time.jpg", 99.0, 90.0, 85.0, 80.0, "Fortune of Time" },

@@ -4,6 +4,7 @@ using Hachiko.DataAcess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hachiko.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251006152318_Add ShoppingCart table")]
+    partial class AddShoppingCarttable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -204,10 +207,16 @@ namespace Hachiko.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("OriginalPrice")
+                    b.Property<double>("ListPrice")
                         .HasColumnType("float");
 
-                    b.Property<double>("Price")
+                    b.Property<double>("Price1")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Price2")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Price3")
                         .HasColumnType("float");
 
                     b.Property<string>("Title")
@@ -229,8 +238,10 @@ namespace Hachiko.Migrations
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "SWD9999001",
                             ImageUrl = "/images/products/fortune of time.jpg",
-                            OriginalPrice = 99.0,
-                            Price = 90.0,
+                            ListPrice = 99.0,
+                            Price1 = 90.0,
+                            Price2 = 85.0,
+                            Price3 = 80.0,
                             Title = "Fortune of Time"
                         },
                         new
@@ -241,8 +252,10 @@ namespace Hachiko.Migrations
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "CAW777777701",
                             ImageUrl = "/images/products/dark skies.jpg",
-                            OriginalPrice = 40.0,
-                            Price = 30.0,
+                            ListPrice = 40.0,
+                            Price1 = 30.0,
+                            Price2 = 25.0,
+                            Price3 = 20.0,
                             Title = "Dark Skies"
                         },
                         new
@@ -253,8 +266,10 @@ namespace Hachiko.Migrations
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "RITO5555501",
                             ImageUrl = "/images/products/vanish in the sunset.jpg",
-                            OriginalPrice = 55.0,
-                            Price = 50.0,
+                            ListPrice = 55.0,
+                            Price1 = 50.0,
+                            Price2 = 40.0,
+                            Price3 = 35.0,
                             Title = "Vanish in the Sunset"
                         },
                         new
@@ -265,8 +280,10 @@ namespace Hachiko.Migrations
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "WS3333333301",
                             ImageUrl = "/images/products/cotton candy.jpg",
-                            OriginalPrice = 70.0,
-                            Price = 65.0,
+                            ListPrice = 70.0,
+                            Price1 = 65.0,
+                            Price2 = 60.0,
+                            Price3 = 55.0,
                             Title = "Cotton Candy"
                         },
                         new
@@ -277,8 +294,10 @@ namespace Hachiko.Migrations
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "SOTJ1111111101",
                             ImageUrl = "/images/products/rock in the ocean.jpg",
-                            OriginalPrice = 30.0,
-                            Price = 27.0,
+                            ListPrice = 30.0,
+                            Price1 = 27.0,
+                            Price2 = 25.0,
+                            Price3 = 20.0,
                             Title = "Rock in the Ocean"
                         },
                         new
@@ -289,8 +308,10 @@ namespace Hachiko.Migrations
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "FOT000000001",
                             ImageUrl = "/images/products/leaves and wonders.jpg",
-                            OriginalPrice = 25.0,
-                            Price = 23.0,
+                            ListPrice = 25.0,
+                            Price1 = 23.0,
+                            Price2 = 22.0,
+                            Price3 = 20.0,
                             Title = "Leaves and Wonders"
                         });
                 });
