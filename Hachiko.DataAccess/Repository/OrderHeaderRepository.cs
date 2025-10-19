@@ -21,5 +21,33 @@ namespace Hachiko.DataAccess.Repository
         {
             _dbContext.OrderHeaders.Update(entity);
         }
+
+        public void UpdateStatus(int id, string orderStatus, string? paymentStatus = null)
+        {
+            var orderFromDb = _dbContext.OrderHeaders.FirstOrDefault(u => u.Id == id);
+            if (orderFromDb is not null)
+            {
+                orderFromDb.OrderStatus = orderStatus;
+                if (!String.IsNullOrEmpty(paymentStatus))
+                {
+                    orderFromDb.PaymentStatus = paymentStatus;
+                }
+            }
+        }
+
+        public void UpdateStripePaymentID(int id, string sessionId, string paymentIntentId)
+        {
+            var orderFromDb = _dbContext.OrderHeaders.FirstOrDefault(u => u.Id == id);
+            if(!String.IsNullOrEmpty(sessionId))
+            {
+                orderFromDb.SessionId = sessionId;
+            }
+
+            if (!String.IsNullOrEmpty(paymentIntentId))
+            {
+                orderFromDb.PaymentIntentId = paymentIntentId;
+                orderFromDb.PaymentDate = DateTime.Now; 
+            }
+        }
     }
 }
