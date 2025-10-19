@@ -4,5 +4,5 @@ public class ShoppingCartViewModel
 {
     public string UserId { get; set; }
     public IEnumerable<ShoppingCart> ShoppingCarts { get; set; }
-    public double OrderTotal { get; set; }
+    public OrderHeader OrderHeader { get; set; }
 }

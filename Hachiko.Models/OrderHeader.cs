@@ -38,6 +38,8 @@ namespace Hachiko.Models
         [Required]
         public string Name { get; set; } = String.Empty;
         [Required]
+        public string PhoneNumber { get; set; } = String.Empty;
+        [Required]
         public string StreetAddress { get; set; } = String.Empty;
         [Required]
         public string City { get; set; } = String.Empty;

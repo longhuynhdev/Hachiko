@@ -67,6 +67,7 @@ namespace Hachiko.Utility
                     UserName = customerEmail,
                     Email = customerEmail,
                     Name = "Customer User",
+                    PhoneNumber = "0123456789",
                     EmailConfirmed = true,
                     StreetAddress = "123 Street",
                     City = "Gotham City",
