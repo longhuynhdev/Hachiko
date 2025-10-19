@@ -6,15 +6,15 @@ namespace Hachiko.DataAccess.Repository;
 
 public class ShoppingCartRepository : Repository<ShoppingCart>,IShoppingCartRepository
 {
-    private ApplicationDbContext _db;
+    private ApplicationDbContext _dbContext;
 
-    public ShoppingCartRepository(ApplicationDbContext db) : base(db)
+    public ShoppingCartRepository(ApplicationDbContext dbContext) : base(dbContext)
     {
-        _db = db;
+        _dbContext = dbContext;
     }
 
     public void Update(ShoppingCart entity)
     {
-        _db.Update(entity);
+        _dbContext.ShoppingCarts.Update(entity);
     }
 }

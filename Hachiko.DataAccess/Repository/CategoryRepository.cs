@@ -6,17 +6,17 @@ namespace Hachiko.DataAccess.Repository
 {
     public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
-        private ApplicationDbContext _db;
+        private ApplicationDbContext _dbContext;
 
-        public CategoryRepository(ApplicationDbContext db) : base(db)
+        public CategoryRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
-            _db = db;
+            _dbContext = dbContext;
         }
      
 
-        public void Update(Category obj)
+        public void Update(Category entity)
         {
-            _db.Categories.Update(obj);
+            _dbContext.Categories.Update(entity);
         }
     }
 }

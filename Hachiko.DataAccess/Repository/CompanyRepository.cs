@@ -6,15 +6,15 @@ namespace Hachiko.DataAccess.Repository;
 
 public class CompanyRepository : Repository<Company>, ICompanyRepository {
     
-    private ApplicationDbContext _db;
+    private ApplicationDbContext _dbContext;
 
-    public CompanyRepository(ApplicationDbContext db) : base(db)
+    public CompanyRepository(ApplicationDbContext dbContext) : base(dbContext)
     {
-        _db = db;
+        _dbContext = dbContext;
     }
     
     public void Update(Company entity)
     {
-        _db.Update(entity);
+        _dbContext.Companies.Update(entity);
     }
 }

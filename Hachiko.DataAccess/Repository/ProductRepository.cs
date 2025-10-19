@@ -6,17 +6,17 @@ namespace Hachiko.DataAccess.Repository
 {
     public class ProductRepository : Repository<Product>, IProductRepository
     {
-        private ApplicationDbContext _db;
+        private ApplicationDbContext _dbContext;
 
-        public ProductRepository(ApplicationDbContext db) : base(db)
+        public ProductRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
-            _db = db;
+            _dbContext = dbContext;
         }
      
 
-        public void Update(Product obj)
+        public void Update(Product entity)
         {
-            _db.Products.Update(obj);
+            _dbContext.Products.Update(entity);
         }
     }
 }

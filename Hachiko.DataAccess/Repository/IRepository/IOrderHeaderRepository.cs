@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Hachiko.DataAccess.Repository.IRepository
 {
-    public interface ICategoryRepository : IRepository<Category>
+    public interface IOrderHeaderRepository : IRepository<OrderHeader>
     {
-        void Update(Category entity);
+        public void Update(OrderHeader entity); 
     }
+
 }

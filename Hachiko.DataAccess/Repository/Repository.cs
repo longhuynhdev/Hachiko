@@ -7,14 +7,14 @@ namespace Hachiko.DataAccess.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly ApplicationDbContext _db;
+        private readonly ApplicationDbContext _dbContext;
         internal DbSet<T> dbSet;
 
-        public Repository(ApplicationDbContext db)
+        public Repository(ApplicationDbContext dbContext)
         {
-            _db = db;
-            this.dbSet = _db.Set<T>();
-            _db.Products.Include(u => u.Category);
+            _dbContext = dbContext;
+            this.dbSet = _dbContext.Set<T>();
+            _dbContext.Products.Include(u => u.Category);
         }
         
         public void Add(T entity)
