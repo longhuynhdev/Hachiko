@@ -22,22 +22,14 @@ namespace Hachiko.Models
         [Required]
         public string Author { get; set; } = String.Empty;
         [Required]
-        [Display(Name ="List Price")]
+        [Display(Name ="Original Price")]
         [Range(0,int.MaxValue)]
-        public double ListPrice { get; set; }
+        public double OriginalPrice { get; set; }
 
-        [Display(Name = "Price 1")]
+        [Display(Name = "Price")]
         [Range(0, int.MaxValue)]
-        public double Price1 { get; set; }
-
-        [Display(Name = "Price 2")]
-        [Range(0, int.MaxValue)]
-        public double Price2 { get; set; }
-
-        [Display(Name = "Price 3")]
-        [Range(0, int.MaxValue)]
-        public double Price3 { get; set; }
-
+        public double Price { get; set; }
+        
         public int CategoryId { get; set; }
         //Reference key
         [ForeignKey("CategoryId")]

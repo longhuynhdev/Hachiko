@@ -18,7 +18,10 @@ namespace Hachiko.DataAcess.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<OrderHeader> OrderHeaders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,10 +44,8 @@ namespace Hachiko.DataAcess.Data
                     Author = "Billy Spark",
                     Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                     ISBN = "SWD9999001",
-                    ListPrice = 99,
-                    Price1 = 90,
-                    Price2 = 85,
-                    Price3 = 80,
+                    OriginalPrice = 99,
+                    Price = 90,
                     CategoryId = 1,
                     ImageUrl ="/images/products/fortune of time.jpg"
                 },
@@ -55,10 +56,8 @@ namespace Hachiko.DataAcess.Data
                     Author = "Nancy Hoover",
                     Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                     ISBN = "CAW777777701",
-                    ListPrice = 40,
-                    Price1 = 30,
-                    Price2 = 25,
-                    Price3 = 20,
+                    OriginalPrice = 40,
+                    Price = 30,
                     CategoryId = 1,
                     ImageUrl = "/images/products/dark skies.jpg"
                 },
@@ -69,10 +68,8 @@ namespace Hachiko.DataAcess.Data
                     Author = "Julian Button",
                     Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                     ISBN = "RITO5555501",
-                    ListPrice = 55,
-                    Price1 = 50,
-                    Price2 = 40,
-                    Price3 = 35,
+                    OriginalPrice = 55,
+                    Price = 50,
                     CategoryId = 2,
                     ImageUrl = "/images/products/vanish in the sunset.jpg"
                 },
@@ -83,10 +80,8 @@ namespace Hachiko.DataAcess.Data
                     Author = "Abby Muscles",
                     Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                     ISBN = "WS3333333301",
-                    ListPrice = 70,
-                    Price1 = 65,
-                    Price2 = 60,
-                    Price3 = 55,
+                    OriginalPrice = 70,
+                    Price = 65,
                     CategoryId = 3,
                     ImageUrl = "/images/products/cotton candy.jpg"
                 },
@@ -97,10 +92,8 @@ namespace Hachiko.DataAcess.Data
                     Author = "Ron Parker",
                     Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                     ISBN = "SOTJ1111111101",
-                    ListPrice = 30,
-                    Price1 = 27,
-                    Price2 = 25,
-                    Price3 = 20,
+                    OriginalPrice = 30,
+                    Price = 27,
                     CategoryId = 2,
                     ImageUrl = "/images/products/rock in the ocean.jpg"
                 },
@@ -111,10 +104,8 @@ namespace Hachiko.DataAcess.Data
                     Author = "Laura Phantom",
                     Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                     ISBN = "FOT000000001",
-                    ListPrice = 25,
-                    Price1 = 23,
-                    Price2 = 22,
-                    Price3 = 20,
+                    OriginalPrice = 25,
+                    Price = 23,
                     CategoryId = 2,
                     ImageUrl = "/images/products/leaves and wonders.jpg"
                 }

@@ -12,6 +12,9 @@ namespace Hachiko.Models
     {
         [Required]
         public string Name { get; set; } = String.Empty;
+
+        //TODO: Modify Address Fields matching Vietnamese Address Format
+        //TODO: Xử lý địa chủ cũ và địa chỉ mới sau xác nhập
         public string? StreetAddress { get; set; }
         public string? City { get; set; }
         public string? State { get; set; }  
