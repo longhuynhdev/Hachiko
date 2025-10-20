@@ -2,6 +2,8 @@
 using Hachiko.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hachiko.Controllers
 {
@@ -31,14 +33,51 @@ namespace Hachiko.Controllers
 
         public IActionResult Index()
         {
-            List<Product>? productList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+            List<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
             return View("Index",productList);
         }
 
         public IActionResult Details(int id)
         {
-            Product product = _unitOfWork.Product.Get(u => u.Id == id, includeProperties: "Category");
-            return View("Details",product);
+            ShoppingCart shoppingCart = new()
+            {
+                ProductId = id,
+                Product = _unitOfWork.Product.Get(u => u.Id == id, includeProperties: "Category"),
+                Count = 1
+            };
+            return View("Details",shoppingCart);
+        }
+        
+        //TODO: Learn about ClaimsIdentity and how it works
+        [HttpPost]
+        [Authorize]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            shoppingCart.Id = 0;
+            // Get the user id of the logged-in user
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            
+            shoppingCart.ApplicationUserId = userId;
+            
+            // Check if the product already exists in the shopping cart for this user
+            ShoppingCart? cartFromDb = _unitOfWork.ShoppingCart.Get(
+                u => u.ApplicationUserId == userId && u.ProductId == shoppingCart.ProductId);
+            
+            if (cartFromDb is not null)
+            {
+                cartFromDb.Count += shoppingCart.Count;
+                _unitOfWork.ShoppingCart.Update(cartFromDb);
+            }
+            else
+            {            
+                _unitOfWork.ShoppingCart.Add(shoppingCart);
+            }
+            
+            TempData["success"] = "Product added to cart successfully!";
+            _unitOfWork.Save();
+            
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()

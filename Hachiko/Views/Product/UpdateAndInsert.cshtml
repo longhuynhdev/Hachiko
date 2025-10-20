@@ -42,25 +42,16 @@
                             <span asp-validation-for="Product.Author" class="text-danger"></span>
                         </div>
                         <div class="form-floating py-2 col-12">
-                            <input asp-for="Product.ListPrice" class="form-control border-0 shadow" />
-                            <label asp-for="Product.ListPrice" class="ms-2"></label>
-                            <span asp-validation-for="Product.ListPrice" class="text-danger"></span>
+                            <input asp-for="Product.OriginalPrice" class="form-control border-0 shadow" />
+                            <label asp-for="Product.OriginalPrice" class="ms-2"></label>
+                            <span asp-validation-for="Product.OriginalPrice" class="text-danger"></span>
                         </div>
                         <div class="form-floating py-2 col-12">
-                            <input asp-for="Product.Price1" class="form-control border-0 shadow" />
-                            <label asp-for="Product.Price1" class="ms-2"></label>
-                            <span asp-validation-for="Product.Price1" class="text-danger"></span>
+                            <input asp-for="Product.Price" class="form-control border-0 shadow" />
+                            <label asp-for="Product.Price" class="ms-2"></label>
+                            <span asp-validation-for="Product.Price" class="text-danger"></span>
                         </div>
-                        <div class="form-floating py-2 col-12">
-                            <input asp-for="Product.Price2" class="form-control border-0 shadow" />
-                            <label asp-for="Product.Price2" class="ms-2"></label>
-                            <span asp-validation-for="Product.Price2" class="text-danger"></span>
-                        </div>
-                        <div class="form-floating py-2 col-12">
-                            <input asp-for="Product.Price3" class="form-control border-0 shadow" />
-                            <label asp-for="Product.Price3" class="ms-2"></label>
-                            <span asp-validation-for="Product.Price3" class="text-danger"></span>
-                        </div>
+                        
                         <div class="form-floating py-2 col-12">
                             <input type="file" name="file" class="form-control border-0 shadow" />
                             <label asp-for="Product.ImageUrl" class="ms-2"></label>
