@@ -6,6 +6,7 @@ using Hachiko.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Google;
 using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,6 +50,46 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
+// Configure Data Protection for cookies
+builder.Services.AddDataProtection();
+
+// Session support for correlation
+builder.Services.AddSession(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    options.Cookie.SameSite = SameSiteMode.Lax;
+});
+
+// Google Authentication
+builder.Services.AddAuthentication()
+    .AddGoogle(googleOptions =>
+    {
+        IConfigurationSection googleAuthNSection =
+            builder.Configuration.GetSection("Authentication:Google");
+
+        googleOptions.ClientId = googleAuthNSection["ClientId"];
+        googleOptions.ClientSecret = googleAuthNSection["ClientSecret"];
+        googleOptions.CallbackPath = "/signin-google";
+        googleOptions.SaveTokens = true;
+
+        // Configure correlation cookie for both HTTP and HTTPS
+        googleOptions.CorrelationCookie.HttpOnly = true;
+        googleOptions.CorrelationCookie.SameSite = SameSiteMode.Lax;
+        // Use None in development to allow both HTTP and HTTPS
+        googleOptions.CorrelationCookie.SecurePolicy = builder.Environment.IsDevelopment()
+            ? CookieSecurePolicy.None
+            : CookieSecurePolicy.Always;
+        googleOptions.CorrelationCookie.MaxAge = TimeSpan.FromMinutes(15);
+
+        // Force Google to always show account picker
+        googleOptions.Events.OnRedirectToAuthorizationEndpoint = context =>
+        {
+            context.Response.Redirect(context.RedirectUri + "&prompt=select_account");
+            return Task.CompletedTask;
+        };
+    });
+
 
 var app = builder.Build();
 
@@ -66,6 +107,8 @@ app.UseStaticFiles();
 StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthentication();
 app.UseAuthorization();

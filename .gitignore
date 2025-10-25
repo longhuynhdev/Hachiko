@@ -387,4 +387,8 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+Hachiko/appsettings.json
+
 .idea/
+
