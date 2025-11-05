@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\**" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
