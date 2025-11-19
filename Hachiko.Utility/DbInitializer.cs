@@ -1,39 +1,45 @@
 using Hachiko.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Hachiko.Utility
 {
-    public static class DbInitializer
+    public class DbInitializer : IDbInitializer
     {
-        public static async Task InitializeAsync(IServiceProvider serviceProvider)
-        {
-            using var scope = serviceProvider.CreateScope();
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-            await SeedRolesAsync(roleManager);
-            await SeedUsersAsync(userManager);
+        public DbInitializer(
+            RoleManager<IdentityRole> roleManager,
+            UserManager<ApplicationUser> userManager)
+        {
+            _roleManager = roleManager;
+            _userManager = userManager;
         }
 
-        private static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
+        public async Task InitializeAsync()
+        {
+            await SeedRolesAsync();
+            await SeedUsersAsync();
+        }
+
+        private async Task SeedRolesAsync()
         {
             string[] roles = { SD.Role_Customer, SD.Role_Admin };
 
             foreach (var role in roles)
             {
-                if (!await roleManager.RoleExistsAsync(role))
+                if (!await _roleManager.RoleExistsAsync(role))
                 {
-                    await roleManager.CreateAsync(new IdentityRole(role));
+                    await _roleManager.CreateAsync(new IdentityRole(role));
                 }
             }
         }
 
-        private static async Task SeedUsersAsync(UserManager<ApplicationUser> userManager)
+        private async Task SeedUsersAsync()
         {
             // Seed Admin User
             var adminEmail = "admin@hachiko.com";
-            var adminUser = await userManager.FindByEmailAsync(adminEmail);
+            var adminUser = await _userManager.FindByEmailAsync(adminEmail);
 
             if (adminUser == null)
             {
@@ -49,16 +55,16 @@ namespace Hachiko.Utility
                     PostalCode = "12345"
                 };
 
-                var result = await userManager.CreateAsync(adminUser, "Demo123@");
+                var result = await _userManager.CreateAsync(adminUser, "Demo123@");
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(adminUser, SD.Role_Admin);
+                    await _userManager.AddToRoleAsync(adminUser, SD.Role_Admin);
                 }
             }
 
             // Seed Customer User
             var customerEmail = "customer@hachiko.com";
-            var customerUser = await userManager.FindByEmailAsync(customerEmail);
+            var customerUser = await _userManager.FindByEmailAsync(customerEmail);
 
             if (customerUser == null)
             {
@@ -75,10 +81,10 @@ namespace Hachiko.Utility
                     PostalCode = "12345"
                 };
 
-                var result = await userManager.CreateAsync(customerUser, "Demo123@");
+                var result = await _userManager.CreateAsync(customerUser, "Demo123@");
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(customerUser, SD.Role_Customer);
+                    await _userManager.AddToRoleAsync(customerUser, SD.Role_Customer);
                 }
             }
         }
