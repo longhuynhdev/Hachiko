@@ -54,8 +54,11 @@ builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddDataProtection();
 
 // Session support for correlation
+builder.Services.AddDistributedMemoryCache();
+
 builder.Services.AddSession(options =>
 {
+    options.IdleTimeout = TimeSpan.FromMinutes(10);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
     options.Cookie.SameSite = SameSiteMode.Lax;
@@ -108,10 +111,10 @@ StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey"
 
 app.UseRouting();
 
-app.UseSession();
-
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapRazorPages();
 app.MapControllerRoute(

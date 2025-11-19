@@ -14,7 +14,7 @@
         var userId = claimsIdentity?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (userId is not null)
         {
-            cartItems = UnitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId).Sum(u => u.Count);
+            cartItems = UnitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId).Count();
         }
     }
 }

@@ -3,6 +3,7 @@ using Hachiko.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
+using Hachiko.Utility;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Hachiko.Controllers
@@ -17,22 +18,20 @@ namespace Hachiko.Controllers
             _unitOfWork = unitOfWork;
             
         }
-
-        //Ref: https://stackoverflow.com/questions/21249670/implementing-luhn-algorithm-using-c-sharp
-        //Luhn Algorithm
-        public static bool Luhn(string digits)
-        {
-            return digits.All(char.IsDigit) && digits.Reverse()
-                .Select(c => c - 48)
-                .Select((thisNum, i) => i % 2 == 0
-                    ? thisNum
-                    : (thisNum *= 2) > 9 ? thisNum - 9 : thisNum
-                ).Sum() % 10 == 0;
-        }
-
-
+        
         public IActionResult Index()
         {
+            var claimsIdentity = (ClaimsIdentity) User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            
+            if (claim is not null)
+            {
+                var userId = claim.Value;
+                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(
+                    u => u.ApplicationUserId == userId).Count());
+
+            }
+            
             List<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
             return View("Index",productList);
         }
@@ -68,14 +67,18 @@ namespace Hachiko.Controllers
             {
                 cartFromDb.Count += shoppingCart.Count;
                 _unitOfWork.ShoppingCart.Update(cartFromDb);
+                _unitOfWork.Save();
             }
             else
             {            
                 _unitOfWork.ShoppingCart.Add(shoppingCart);
+                _unitOfWork.Save();
+                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(
+                    u => u.ApplicationUserId == userId).Count());
             }
             
             TempData["success"] = "Product added to cart successfully!";
-            _unitOfWork.Save();
+            
             
             return RedirectToAction(nameof(Index));
         }

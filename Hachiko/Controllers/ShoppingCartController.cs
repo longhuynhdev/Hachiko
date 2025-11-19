@@ -163,6 +163,7 @@ public class ShoppingCartController : Controller
             _unitOfWork.Save();
 
         }
+        HttpContext.Session.Clear();
 
         var shoppingCarts = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
         _unitOfWork.ShoppingCart.RemoveRange(shoppingCarts);
@@ -184,10 +185,13 @@ public class ShoppingCartController : Controller
 
     public IActionResult Minus(int cartId)
     {
-        var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId);
+        var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId, IsTracked: true);
+        
         
         if (cartFromDb.Count <= 1)
         {
+            HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(
+                u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
             _unitOfWork.ShoppingCart.Remove(cartFromDb);
         }
         else
@@ -202,7 +206,10 @@ public class ShoppingCartController : Controller
 
     public IActionResult Remove(int cartId)
     {
-        var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId);
+        var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId, IsTracked: true);
+        HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(
+            u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
+
         _unitOfWork.ShoppingCart.Remove(cartFromDb);
         _unitOfWork.Save();
         

@@ -29,6 +29,7 @@ namespace Hachiko.Areas.Identity.Pages.Account
         {
             // Sign out from ASP.NET Core Identity (clears application cookie)
             await _signInManager.SignOutAsync();
+            HttpContext.Session.Clear();
 
             // CRITICAL: Clear ALL authentication schemes to ensure complete logout
             // This removes Google OAuth cookies and any other external provider cookies

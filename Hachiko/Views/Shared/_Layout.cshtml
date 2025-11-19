@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var count = HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionCart);
+}
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -38,8 +45,24 @@
 
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Customer" asp-controller="Home"
-                                asp-action="Privacy">Privacy</a>
+                               asp-action="Privacy">Privacy</a>
                         </li>
+                        @if (count != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="ShoppingCart" asp-action="Index">
+                                    <i class="bi bi-cart">(@count)</i> 
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="ShoppingCart" asp-action="Index">
+                                    <i class="bi bi-cart">(0)</i> 
+                                </a>
+                            </li>
+                        }
                         @* Render Content Management Dropdown for Admin *@
                         @if (User.IsInRole(SD.Role_Admin))
                         {
@@ -67,6 +90,7 @@
                                 </ul>
                             </li>
                         }
+                        
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
