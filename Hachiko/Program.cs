@@ -49,6 +49,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 // Add Services
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
 // Configure Data Protection for cookies
 builder.Services.AddDataProtection();
@@ -130,6 +131,10 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 // Seed database with default roles and users
-await DbInitializer.InitializeAsync(app.Services);
+using (var scope = app.Services.CreateScope())
+{
+    var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+    await dbInitializer.InitializeAsync();
+}
 
 app.Run();
