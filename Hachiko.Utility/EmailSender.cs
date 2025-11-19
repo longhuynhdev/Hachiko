@@ -1,23 +1,29 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Extensions.Configuration;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hachiko.Utility
 {
     public class EmailSender : IEmailSender
     {
-        Task IEmailSender.SendEmailAsync(string email, string subject, string htmlMessage)
-        {
-            string userName = "duahaudev@gmail.com";
-            string passWord = "wmfl gsxo zaiu ronc";
+        private readonly IConfiguration _configuration;
 
-            var client = new SmtpClient("smtp.gmail.com", 587)
+        public EmailSender(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public Task SendEmailAsync(string email, string subject, string htmlMessage)
+        {
+            var emailSettings = _configuration.GetSection("EmailSettings");
+            string userName = emailSettings["Username"] ?? throw new InvalidOperationException("Email username not configured");
+            string password = emailSettings["Password"] ?? throw new InvalidOperationException("Email password not configured");
+            string smtpHost = emailSettings["SmtpHost"] ?? "smtp.gmail.com";
+            int smtpPort = int.Parse(emailSettings["SmtpPort"] ?? "587");
+
+            var client = new SmtpClient(smtpHost, smtpPort)
             {
-                Credentials = new System.Net.NetworkCredential(userName, passWord),
+                Credentials = new System.Net.NetworkCredential(userName, password),
                 EnableSsl = true
             };
 
