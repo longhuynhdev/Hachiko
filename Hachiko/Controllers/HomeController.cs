@@ -27,13 +27,7 @@ namespace Hachiko.Controllers
 
         public IActionResult Index()
         {
-            var claimsIdentity = (ClaimsIdentity) User.Identity;
-            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-
-            if (claim is not null)
-            {
-                UpdateCartSession(claim.Value);
-            }
+            
 
             List<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
             return View("Index",productList);

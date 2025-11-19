@@ -47,22 +47,11 @@
                             <a class="nav-link text-dark" asp-area="Customer" asp-controller="Home"
                                asp-action="Privacy">Privacy</a>
                         </li>
-                        @if (count != null)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="ShoppingCart" asp-action="Index">
-                                    <i class="bi bi-cart">(@count)</i> 
-                                </a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="ShoppingCart" asp-action="Index">
-                                    <i class="bi bi-cart">(0)</i> 
-                                </a>
-                            </li>
-                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="ShoppingCart" asp-action="Index">
+                                @await Component.InvokeAsync("ShoppingCart")
+                            </a>
+                        </li>
                         @* Render Content Management Dropdown for Admin *@
                         @if (User.IsInRole(SD.Role_Admin))
                         {
