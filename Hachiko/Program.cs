@@ -54,12 +54,23 @@ builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddDataProtection();
 
 // Session support for correlation
+builder.Services.AddDistributedMemoryCache();
+
 builder.Services.AddSession(options =>
 {
+    options.IdleTimeout = TimeSpan.FromMinutes(10);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
     options.Cookie.SameSite = SameSiteMode.Lax;
 });
+
+// Facebook Authentication
+builder.Services.AddAuthentication()
+    .AddFacebook(option =>
+    {
+        option.AppId = builder.Configuration.GetSection("Authentication:Facebook")["AppId"];
+        option.AppSecret = builder.Configuration.GetSection("Authentication:Facebook")["AppSecret"];
+    });
 
 // Google Authentication
 builder.Services.AddAuthentication()
@@ -108,10 +119,10 @@ StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey"
 
 app.UseRouting();
 
-app.UseSession();
-
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapRazorPages();
 app.MapControllerRoute(
