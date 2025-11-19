@@ -16,22 +16,25 @@ namespace Hachiko.Controllers
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
-            
+
         }
-        
+
+        private void UpdateCartSession(string userId)
+        {
+            HttpContext.Session.SetInt32(SD.SessionCart,
+                _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId).Count());
+        }
+
         public IActionResult Index()
         {
             var claimsIdentity = (ClaimsIdentity) User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            
+
             if (claim is not null)
             {
-                var userId = claim.Value;
-                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(
-                    u => u.ApplicationUserId == userId).Count());
-
+                UpdateCartSession(claim.Value);
             }
-            
+
             List<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
             return View("Index",productList);
         }
@@ -70,12 +73,12 @@ namespace Hachiko.Controllers
                 _unitOfWork.Save();
             }
             else
-            {            
+            {
                 _unitOfWork.ShoppingCart.Add(shoppingCart);
                 _unitOfWork.Save();
-                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(
-                    u => u.ApplicationUserId == userId).Count());
             }
+
+            UpdateCartSession(userId);
             
             TempData["success"] = "Product added to cart successfully!";
             

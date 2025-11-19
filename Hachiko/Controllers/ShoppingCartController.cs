@@ -21,6 +21,12 @@ public class ShoppingCartController : Controller
     {
         this._unitOfWork = unitOfWork;
     }
+
+    private void UpdateCartSession(string userId)
+    {
+        HttpContext.Session.SetInt32(SD.SessionCart,
+            _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId).Count());
+    }
     public IActionResult Index()
     {
         var claimsIdentity = (ClaimsIdentity)User.Identity;
@@ -176,22 +182,21 @@ public class ShoppingCartController : Controller
     {
         var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId);
         cartFromDb.Count += 1;
-        
+
         _unitOfWork.ShoppingCart.Update(cartFromDb);
         _unitOfWork.Save();
-        
+
+        UpdateCartSession(cartFromDb.ApplicationUserId);
+
         return RedirectToAction(nameof(Index));
     }
 
     public IActionResult Minus(int cartId)
     {
         var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId, IsTracked: true);
-        
-        
+
         if (cartFromDb.Count <= 1)
         {
-            HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(
-                u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
             _unitOfWork.ShoppingCart.Remove(cartFromDb);
         }
         else
@@ -200,19 +205,21 @@ public class ShoppingCartController : Controller
             _unitOfWork.ShoppingCart.Update(cartFromDb);
         }
         _unitOfWork.Save();
-        
+
+        UpdateCartSession(cartFromDb.ApplicationUserId);
+
         return RedirectToAction(nameof(Index));
     }
 
     public IActionResult Remove(int cartId)
     {
         var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId, IsTracked: true);
-        HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(
-            u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
 
         _unitOfWork.ShoppingCart.Remove(cartFromDb);
         _unitOfWork.Save();
-        
+
+        UpdateCartSession(cartFromDb.ApplicationUserId);
+
         return RedirectToAction(nameof(Index));
     }
 }
