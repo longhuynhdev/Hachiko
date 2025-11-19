@@ -64,6 +64,14 @@ builder.Services.AddSession(options =>
     options.Cookie.SameSite = SameSiteMode.Lax;
 });
 
+// Facebook Authentication
+builder.Services.AddAuthentication()
+    .AddFacebook(option =>
+    {
+        option.AppId = builder.Configuration.GetSection("Authentication:Facebook")["AppId"];
+        option.AppSecret = builder.Configuration.GetSection("Authentication:Facebook")["AppSecret"];
+    });
+
 // Google Authentication
 builder.Services.AddAuthentication()
     .AddGoogle(googleOptions =>
