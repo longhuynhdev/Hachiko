@@ -6,7 +6,5 @@
   href: use-case-diagram.md
 - name: Class diagram
   href: class-diagram.md
-- name: Flowchart
-  href: flowchart.md
 - name: How to add new entities
   href: add-entities.md
