@@ -35,12 +35,28 @@ dotnet ef database update
 ```
 
 
-### 3. Connection String
-Verify the connection string in `appsettings.json`:
-```json
-"ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Database=Hachiko;User Id=sa;Password=SQLServer123@; TrustServerCertificate=True;"
-}
+### 3. Configuration (User Secrets)
+
+```bash
+# Initialize user secrets (from Hachiko project directory)
+dotnet user-secrets init
+
+# Configure connection string
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=localhost;Database=Hachiko;User Id=sa;Password=SQLServer123@;TrustServerCertificate=True;"
+
+# Configure authentication providers
+dotnet user-secrets set "Authentication:Facebook:AppId" "your-facebook-app-id"
+dotnet user-secrets set "Authentication:Facebook:AppSecret" "your-facebook-app-secret"
+dotnet user-secrets set "Authentication:Google:ClientId" "your-google-client-id"
+dotnet user-secrets set "Authentication:Google:ClientSecret" "your-google-client-secret"
+
+# Configure Stripe payment integration
+dotnet user-secrets set "Stripe:PublishableKey" "your-stripe-publishable-key"
+dotnet user-secrets set "Stripe:SecretKey" "your-stripe-secret-key"
+
+# Configure email sender
+dotnet user-secrets set "EmailSettings:Username" "your-email"
+dotnet user-secrets set "EmailSettings:Password" "your-email-password"
 ```
 
 ### 4. Run the Application
