@@ -22,6 +22,7 @@ namespace Hachiko.DataAcess.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<OrderHeader> OrderHeaders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,6 +36,33 @@ namespace Hachiko.DataAcess.Data
                     entityType.SetTableName(tableName.Substring(6));
                 }
             }
+
+            // Configure Address entity
+            modelBuilder.Entity<Address>(entity =>
+            {
+                // Configure table with check constraint
+                entity.ToTable(t => t.HasCheckConstraint(
+                    "CK_Address_Owner",
+                    "(ApplicationUserId IS NOT NULL AND CompanyId IS NULL) OR (ApplicationUserId IS NULL AND CompanyId IS NOT NULL)"
+                ));
+
+                // Configure relationship with ApplicationUser
+                entity.HasOne(a => a.ApplicationUser)
+                    .WithMany(u => u.Addresses)
+                    .HasForeignKey(a => a.ApplicationUserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                // Configure relationship with Company
+                entity.HasOne(a => a.Company)
+                    .WithMany(c => c.Addresses)
+                    .HasForeignKey(a => a.CompanyId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                // Index for faster queries
+                entity.HasIndex(a => a.ApplicationUserId);
+                entity.HasIndex(a => a.CompanyId);
+                entity.HasIndex(a => a.IsDefault);
+            });
 
             modelBuilder.Entity<Category>().HasData(
                 new Category() {Id =1, Name = "Action", DisplayOrder = 1},

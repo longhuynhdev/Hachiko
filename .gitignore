@@ -392,3 +392,4 @@ Hachiko/appsettings.json
 
 .idea/
 
+/.claude/settings.local.json

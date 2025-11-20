@@ -12,8 +12,8 @@ namespace Hachiko.DataAccess.Repository
         public IShoppingCartRepository ShoppingCart { get; private set; }
         public IOrderHeaderRepository OrderHeader { get; private set; }
         public IOrderDetailRepository OrderDetail { get; private set; }
-
         public IApplicationUserRepository ApplicationUser { get; private set; }
+        public IAddressRepository Address { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -25,6 +25,7 @@ namespace Hachiko.DataAccess.Repository
             OrderHeader = new OrderHeaderRepository(_dbContext);
             OrderDetail = new OrderDetailRepository(_dbContext);
             ApplicationUser = new ApplicationUserRepository(_dbContext);
+            Address = new AddressRepository(_dbContext);
         }
         public void Save()
         {
