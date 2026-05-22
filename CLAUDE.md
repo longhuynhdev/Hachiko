@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
-This is "Hachiko", an ASP.NET Core 9.0 e-commerce web application built with the MVC pattern. The project implements a book store with categories and products, using Identity for authentication and Entity Framework Core with SQL Server for data persistence.
+This is "Hachiko", an ASP.NET Core 10.0 e-commerce web application built with the MVC pattern. The project implements a book store with categories and products, using Identity for authentication and Entity Framework Core with SQL Server for data persistence.
 
 ## Project Structure
 The solution follows a clean architecture with separated concerns:

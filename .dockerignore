@@ -1,0 +1,11 @@
+**/.git
+**/.vs
+**/bin
+**/obj
+**/*.user
+**/node_modules
+docfx_project
+README.md
+CLAUDE.md
+*.ps1
+*.sh
